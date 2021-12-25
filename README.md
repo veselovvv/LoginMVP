@@ -1,2 +1,2 @@
 # LoginMVP
-This project isn't finished yet.
+Login screen with MVP.
