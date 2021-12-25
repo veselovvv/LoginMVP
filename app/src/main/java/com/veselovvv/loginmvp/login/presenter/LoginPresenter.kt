@@ -19,6 +19,7 @@ class LoginPresenter(var iLoginView: ILoginView) : ILoginPresenter {
     }
 
     override fun login(id: String, password: String) {
+        clear()
         showProgress()
 
         LoginController.requestLogin(

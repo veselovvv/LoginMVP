@@ -8,8 +8,12 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.veselovvv.loginmvp.R
+import com.veselovvv.loginmvp.login.presenter.ILoginPresenter
+import com.veselovvv.loginmvp.login.presenter.LoginPresenter
 
 class LoginActivity : AppCompatActivity(), ILoginView {
+
+    lateinit var iLoginPresenter: ILoginPresenter
 
     private lateinit var idEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
@@ -27,9 +31,17 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         loginResultTextView = findViewById(R.id.loginResultTextView)
         progressFrameLayout = findViewById(R.id.progressFrameLayout)
 
-        loginButton.setOnClickListener {
+        initPresenter()
 
+        loginButton.setOnClickListener {
+            iLoginPresenter.login(
+                id = idEditText.text.toString().trim(),
+                password = passwordEditText.text.toString().trim())
         }
+    }
+
+    private fun initPresenter() {
+        iLoginPresenter = LoginPresenter(iLoginView = this)
     }
 
     override fun onClear() {
