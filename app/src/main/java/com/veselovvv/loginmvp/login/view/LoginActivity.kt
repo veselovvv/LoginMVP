@@ -2,6 +2,7 @@ package com.veselovvv.loginmvp.login.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.FrameLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -32,18 +33,19 @@ class LoginActivity : AppCompatActivity(), ILoginView {
     }
 
     override fun onClear() {
-
+        idEditText.setText("")
+        passwordEditText.setText("")
     }
 
     override fun onShowProgress() {
-
+        progressFrameLayout.visibility = View.VISIBLE
     }
 
     override fun onHideProgress() {
-
+        progressFrameLayout.visibility = View.GONE
     }
 
     override fun onUpdateLoginResult(nickname: String, age: Int) {
-
+        loginResultTextView.text = "Nickname is $nickname, age is $age"
     }
 }
