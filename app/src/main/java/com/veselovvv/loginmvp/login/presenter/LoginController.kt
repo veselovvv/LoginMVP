@@ -3,7 +3,6 @@ package com.veselovvv.loginmvp.login.presenter
 import com.veselovvv.loginmvp.ThreadUtil
 
 object LoginController {
-
     interface LoginControllerDelegate {
         fun onSuccess(response: String)
         fun onFailed()

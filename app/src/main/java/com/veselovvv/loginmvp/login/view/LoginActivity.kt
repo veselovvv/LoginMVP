@@ -1,9 +1,9 @@
 package com.veselovvv.loginmvp.login.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -12,13 +12,9 @@ import com.veselovvv.loginmvp.login.presenter.ILoginPresenter
 import com.veselovvv.loginmvp.login.presenter.LoginPresenter
 
 class LoginActivity : AppCompatActivity(), ILoginView {
-
     lateinit var iLoginPresenter: ILoginPresenter
-
     private lateinit var idEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
-    private lateinit var loginButton: MaterialButton
-    private lateinit var loginResultTextView: MaterialTextView
     private lateinit var progressFrameLayout: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,21 +23,19 @@ class LoginActivity : AppCompatActivity(), ILoginView {
 
         idEditText = findViewById(R.id.idEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
-        loginButton = findViewById(R.id.loginButton)
-        loginResultTextView = findViewById(R.id.loginResultTextView)
         progressFrameLayout = findViewById(R.id.progressFrameLayout)
 
         initPresenter()
 
-        loginButton.setOnClickListener {
+        findViewById<MaterialButton>(R.id.loginButton).setOnClickListener {
             iLoginPresenter.login(
-                id = idEditText.text.toString().trim(),
-                password = passwordEditText.text.toString().trim())
+                idEditText.text.toString().trim(),
+                passwordEditText.text.toString().trim())
         }
     }
 
     private fun initPresenter() {
-        iLoginPresenter = LoginPresenter(iLoginView = this)
+        iLoginPresenter = LoginPresenter(this)
     }
 
     override fun onClear() {
@@ -58,6 +52,7 @@ class LoginActivity : AppCompatActivity(), ILoginView {
     }
 
     override fun onUpdateLoginResult(nickname: String, age: Int) {
-        loginResultTextView.text = "Nickname is $nickname, age is $age"
+        findViewById<MaterialTextView>(R.id.loginResultTextView).text =
+            "Nickname is $nickname, age is $age"
     }
 }
