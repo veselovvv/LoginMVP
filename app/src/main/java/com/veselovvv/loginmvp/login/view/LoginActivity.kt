@@ -12,7 +12,7 @@ import com.veselovvv.loginmvp.login.presenter.ILoginPresenter
 import com.veselovvv.loginmvp.login.presenter.LoginPresenter
 
 class LoginActivity : AppCompatActivity(), ILoginView {
-    lateinit var iLoginPresenter: ILoginPresenter
+    private lateinit var iLoginPresenter: ILoginPresenter
     private lateinit var idEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var progressFrameLayout: FrameLayout
@@ -21,21 +21,18 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        iLoginPresenter = LoginPresenter(this)
+
         idEditText = findViewById(R.id.idEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         progressFrameLayout = findViewById(R.id.progressFrameLayout)
 
-        initPresenter()
-
         findViewById<MaterialButton>(R.id.loginButton).setOnClickListener {
             iLoginPresenter.login(
                 idEditText.text.toString().trim(),
-                passwordEditText.text.toString().trim())
+                passwordEditText.text.toString().trim()
+            )
         }
-    }
-
-    private fun initPresenter() {
-        iLoginPresenter = LoginPresenter(this)
     }
 
     override fun onClear() {

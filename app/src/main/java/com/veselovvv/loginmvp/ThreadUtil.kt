@@ -4,23 +4,32 @@ import android.os.Handler
 import android.os.Looper
 import java.util.concurrent.Executors
 
-class ThreadUtil {
-    companion object {
-        private val executorService = Executors.newFixedThreadPool(
-            Runtime.getRuntime().availableProcessors()
-        )
-        private val handler = Handler(Looper.getMainLooper())
+interface ThreadUtil {
+    fun finalize()
 
-        fun startThread(runnable: Runnable) {
-            executorService.submit(runnable)
+    class Base : ThreadUtil {
+        interface Threads {
+            fun startThread(runnable: Runnable)
+            fun startUIThread(delayMillis: Int, runnable: Runnable)
         }
 
-        fun startUIThread(delayMillis: Int, runnable: Runnable) {
-            handler.postDelayed(runnable, delayMillis.toLong())
-        }
-    }
+        companion object : Threads {
+            private val executorService = Executors.newFixedThreadPool(
+                Runtime.getRuntime().availableProcessors()
+            )
+            private val handler = Handler(Looper.getMainLooper())
 
-    protected fun finalize() {
-        if (!executorService.isShutdown) executorService.shutdown()
+            override fun startThread(runnable: Runnable) {
+                executorService.submit(runnable)
+            }
+
+            override fun startUIThread(delayMillis: Int, runnable: Runnable) {
+                handler.postDelayed(runnable, delayMillis.toLong())
+            }
+        }
+
+        override fun finalize() {
+            if (!executorService.isShutdown) executorService.shutdown()
+        }
     }
 }

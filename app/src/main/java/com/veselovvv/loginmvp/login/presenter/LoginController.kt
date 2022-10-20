@@ -9,7 +9,7 @@ object LoginController {
     }
 
     fun requestLogin(id: String, password: String, delegate: LoginControllerDelegate) {
-        ThreadUtil.startThread {
+        ThreadUtil.Base.startThread {
             Thread.sleep(3000)
             delegate.onSuccess("Response from server")
         }

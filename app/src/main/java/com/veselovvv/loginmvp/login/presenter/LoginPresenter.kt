@@ -4,7 +4,7 @@ import com.veselovvv.loginmvp.ThreadUtil
 import com.veselovvv.loginmvp.login.model.User
 import com.veselovvv.loginmvp.login.view.ILoginView
 
-class LoginPresenter(var iLoginView: ILoginView) : ILoginPresenter {
+class LoginPresenter(private var iLoginView: ILoginView) : ILoginPresenter {
     override fun clear() = iLoginView.onClear()
     override fun showProgress() = iLoginView.onShowProgress()
     override fun hideProgress() = iLoginView.onHideProgress()
@@ -26,7 +26,7 @@ class LoginPresenter(var iLoginView: ILoginView) : ILoginPresenter {
                     user.age = 30
 
                     // UI thread:
-                    ThreadUtil.startUIThread(0) {
+                    ThreadUtil.Base.startUIThread(0) {
                         hideProgress()
                         iLoginView.onUpdateLoginResult(user.nickname, user.age)
                     }
